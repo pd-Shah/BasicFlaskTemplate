@@ -1,5 +1,8 @@
 from os import makedirs
-from flask import Flask
+from flask import (
+    Flask,
+    render_template,
+)
 from settings import config
 
 
@@ -22,6 +25,6 @@ def create_app():
 
     @app.route("/", methods=["GET", ])
     def test():
-        return "everything is working"
+        return render_template("base.html")
 
     return app
