@@ -4,6 +4,12 @@ from flask import (
     render_template,
 )
 from settings import config
+from app.init import (
+    db,
+    migrate,
+)
+from app.packages.email.templates import WelcomeToYourSite
+from app.packages.email import Email
 
 
 def create_app():
@@ -21,10 +27,14 @@ def create_app():
     except Exception as e:
         print(e)
 
-    app.config.from_pyfile(app.instance_path + "/settings.py")
+    app.config.from_pyfile(filename="settings.py", silent=False)
+    db.init_app(app=app)
+    migrate.init_app(app, db, )
 
     @app.route("/", methods=["GET", ])
     def test():
+        email = Email(WelcomeToYourSite)
+        email.send("pd.shahsafi@gmail.com")
         return render_template("base.html")
 
     return app
