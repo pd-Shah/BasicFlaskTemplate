@@ -19,16 +19,26 @@ with app.app_context():
     db.session.commit()
 
     admin = User(name="pd", username="admin", email="pd.shahsafi@gmail.com")
+    admin.password = "1"
+    db.session.add(admin)
+    db.session.commit()
+
     moderator = User(name="moderator", username="moderator", email="moderator@gmail.com")
+    moderator.password = "1"
+    db.session.add(moderator)
+    db.session.commit()
 
     user = User(name=fake.name(), username=fake.name(), email=fake.email(), role=user_role)
+    user.password = "1"
     db.session.add(user)
     db.session.commit()
 
     user = User(name=fake.name(), username=fake.name(), email=fake.email(), role=user_role)
+    user.password = "1"
     db.session.add(user)
     db.session.commit()
 
     user = User(name=fake.name(), username=fake.name(), email=fake.email(), role=user_role)
+    user.password = "1"
     db.session.add(user)
     db.session.commit()

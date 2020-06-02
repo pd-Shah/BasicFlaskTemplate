@@ -7,9 +7,12 @@ from settings import config
 from app.init import (
     db,
     migrate,
+    login,
+    email,
 )
 from app.packages.email.templates import WelcomeToYourSite
 from app.packages.email import Email
+from app.packages import authentication
 
 
 def create_app():
@@ -30,11 +33,12 @@ def create_app():
     app.config.from_pyfile(filename="settings.py", silent=False)
     db.init_app(app=app)
     migrate.init_app(app, db, )
+    email.init_app(app, )
+    login.init_app(app, )
+    app.register_blueprint(authentication.bp)
 
     @app.route("/", methods=["GET", ])
     def test():
-        email = Email(WelcomeToYourSite)
-        email.send("pd.shahsafi@gmail.com")
         return render_template("base.html")
 
     return app
