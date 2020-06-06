@@ -12,7 +12,10 @@ from flask_login import (
     current_user,
 )
 from .forms import LoginForm
-from .logics import check_to_login
+from .logics import (
+    check_to_login,
+    get_user_by_username,
+)
 from app.packages.utils import is_url_safe
 
 bp = Blueprint(
@@ -53,3 +56,9 @@ def logout():
     logout_user()
     flash("[+] logout successfully done.")
     return render_template("authentication/logout.html")
+
+
+@bp.route("/<string:username>")
+def user(username, ):
+    user = get_user_by_username(username=username)
+    return render_template("authentication/profile.html", user=user)

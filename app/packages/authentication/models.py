@@ -1,3 +1,4 @@
+from datetime import datetime
 from werkzeug.security import (
     check_password_hash,
     generate_password_hash,
@@ -53,9 +54,9 @@ class Role(db.Model):
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, )
-    name = db.Column(db.String(length=256, ), unique=True, )
+    name = db.Column(db.String(length=256, ), )
     family = db.Column(db.String(length=256, ), )
-    username = db.Column(db.String(length=256, ), )
+    username = db.Column(db.String(length=256, ), unique=True, )
     password_hash = db.Column(db.String(length=256, ), )
     role_id = db.Column(
         db.Integer,
@@ -63,6 +64,9 @@ class User(UserMixin, db.Model):
     )
     role = db.relationship("Role", back_populates="users", )
     email = db.Column(db.String(length=256), unique=True)
+    location = db.Column(db.String(length=256))
+    about_me = db.Column(db.Text())
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
@@ -90,6 +94,11 @@ class User(UserMixin, db.Model):
         if permission is not None:
             return self.role.has_permission(permission)
         return False
+
+    def update_last_seen(self, ):
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
+        db.session.commit()
 
 
 class AnonymousUser(AnonymousUserMixin, ):

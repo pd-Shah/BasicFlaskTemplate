@@ -16,6 +16,7 @@ def check_to_login(user_obj, ):
         return False
     if not user.verify_password(user_obj.password.data):
         return False
+    user.update_last_seen()
     return user
 
 
@@ -31,3 +32,8 @@ def permission_required(permission, ):
         return wrapper
 
     return decorator
+
+
+def get_user_by_username(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return user
