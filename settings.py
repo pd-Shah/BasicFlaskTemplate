@@ -11,6 +11,7 @@ class Config:
     SMTP_PORT = environ.get("SMTP_PORT")
     SOURCE_SERVER_NAME = environ.get("SOURCE_SERVER_NAME")
     SECRET_KEY = environ.get("SECRET_KEY")
+    ADMIN = environ.get("ADMIN")
 
 
 class ProductionConfig(Config):

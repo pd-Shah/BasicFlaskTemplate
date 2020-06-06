@@ -35,6 +35,7 @@ def create_app():
     migrate.init_app(app, db, )
     email.init_app(app, )
     login.init_app(app, )
+    login.anonymous_user = authentication.models.AnonymousUser
     app.register_blueprint(authentication.bp)
 
     @app.route("/", methods=["GET", ])

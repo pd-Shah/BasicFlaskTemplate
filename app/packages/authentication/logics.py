@@ -1,3 +1,6 @@
+from functools import wraps
+from flask_login import current_user
+from flask import abort
 from app.init import login
 from .models import User
 
@@ -14,3 +17,17 @@ def check_to_login(user_obj, ):
     if not user.verify_password(user_obj.password.data):
         return False
     return user
+
+
+def permission_required(permission, ):
+    def decorator(f, ):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            if not current_user.can(permission):
+                abort(403)
+
+            return f(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
