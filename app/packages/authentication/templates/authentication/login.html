@@ -1,31 +1,44 @@
 {% extends "base.html" %}
-
-{% block content %}
-    <form method="post">
-        {{ form.hidden_tag() }}
-        <div class="field">
-            {{ form.email.label(class="label") }}
-            {{ form.email(class="input") }}
-            {% for error in form.email.errors %}
-                <div class="message is-danger">
-                    <div class="message-body">
-                        {{ error }}
-                    </div>
+{% block hero_body %}
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="has-text-green is-size-2 is-size-3-mobile">
+                Let's Login First
+            </h1>
+            <div class="columns">
+                <div class="column is-two-fifths">
+                    <form method="post">
+                        {{ form.hidden_tag() }}
+                        <div class="field">
+                            {{ form.email.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
+                            {{ form.email(class="input") }}
+                            {% for error in form.email.errors %}
+                                <div class="message is-danger">
+                                    <div class="message-body">
+                                        {{ error }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {{ form.password.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
+                            {{ form.password(class="input") }}
+                            {% for error in form.password.errors %}
+                                <div class="message is-danger">
+                                    <div class="message-body">
+                                        {{ error }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div>
+                                {{ form.submit(class="btn has-mustard-bg is-size-7 a-menu") }}
+                                <a class="btn has-mustard-bg is-size-7 a-menu" href="/"> Forget Password </a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            {% endfor %}
-            {{ form.password.label(class="label") }}
-            {{ form.password(class="input") }}
-            {% for error in form.password.errors %}
-                <div class="message is-danger">
-                    <div class="message-body">
-                        {{ error }}
-                    </div>
-                </div>
-            {% endfor %}
-            {{ form.submit(class="button is-primary") }}
-            {{ form.remember_me() }}
-            {{ form.remember_me.label }}
+                <div class="column"></div>
+                <div class="column"></div>
+            </div>
         </div>
-    </form>
-    <a href="/"> Forget Password </a>
+    </div>
 {% endblock %}
+{% block content %} {% endblock %}

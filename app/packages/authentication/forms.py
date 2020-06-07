@@ -22,7 +22,7 @@ class LoginForm(FlaskForm):
         validators=[DataRequired()]
     )
     remember_me = BooleanField(
-        label="remember me",
+        label="",
     )
     submit = SubmitField(
         label="login",

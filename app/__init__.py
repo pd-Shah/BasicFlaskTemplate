@@ -13,6 +13,7 @@ from app.init import (
 from app.packages.email.templates import WelcomeToYourSite
 from app.packages.email import Email
 from app.packages import authentication
+from app.packages import error
 
 
 def create_app():
@@ -37,9 +38,10 @@ def create_app():
     login.init_app(app, )
     login.anonymous_user = authentication.models.AnonymousUser
     app.register_blueprint(authentication.bp)
+    app.register_blueprint(error.bp)
 
     @app.route("/", methods=["GET", ])
-    def test():
+    def index():
         return render_template("base.html")
 
     return app
