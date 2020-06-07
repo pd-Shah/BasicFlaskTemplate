@@ -1,4 +1,6 @@
 from faker import Faker
+from dotenv import load_dotenv
+from os import environ
 from app.init import db
 from app import create_app
 from app.packages.authentication.models import User, Role, Permission
@@ -29,6 +31,7 @@ def get_user_role():
 
 
 with app.app_context():
+    load_dotenv()
     db.reflect()
     db.drop_all()
     db.create_all()
@@ -41,10 +44,7 @@ with app.app_context():
     db.session.add_all([admin_role, moderator_role, user_role])
     db.session.commit()
 
-    # TODO
-    # BUG
-    # environ.get("ADMIN") is None here
-    admin = User(name="pd", username="admin", email="pd.shahsafi@gmail.com", role=admin_role)
+    admin = User(name="pd", username="admin", email="pd.shahsafi@gmail.com", )
     admin.password = "1"
     db.session.add(admin)
     db.session.commit()
