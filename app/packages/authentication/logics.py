@@ -1,7 +1,10 @@
 from functools import wraps
 from flask_login import current_user
 from flask import abort
-from app.init import login
+from app.init import (
+    login,
+    db,
+)
 from .models import User
 
 
@@ -37,3 +40,12 @@ def permission_required(permission, ):
 def get_user_by_username(username):
     user = User.query.filter_by(username=username).first_or_404()
     return user
+
+
+def check_to_sign_up(user_obj, ):
+    password = user_obj.password.data
+    email = user_obj.email.data
+    user = User(email=email)
+    user.password = password
+    db.session.add(user)
+    db.session.commit()

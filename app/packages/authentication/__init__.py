@@ -11,10 +11,14 @@ from flask_login import (
     logout_user,
     current_user,
 )
-from .forms import LoginForm
+from .forms import (
+    LoginForm,
+    SignUpForm,
+)
 from .logics import (
     check_to_login,
     get_user_by_username,
+    check_to_sign_up,
 )
 from app.packages.utils import is_url_safe
 
@@ -55,10 +59,20 @@ def login():
 def logout():
     logout_user()
     flash("[+] logout successfully done.")
-    return render_template("authentication/logout.html")
+    return redirect(url_for("index"))
 
 
 @bp.route("/<string:username>")
 def user(username, ):
-    user = get_user_by_username(username=username)
-    return render_template("authentication/profile.html", user=user)
+    user_obj = get_user_by_username(username=username)
+    return render_template("authentication/profile.html", user=user_obj)
+
+
+@bp.route("/sign-up", methods=["POST", "GET"])
+def sign_up():
+    form = SignUpForm()
+    if form.validate_on_submit():
+        check_to_sign_up(form)
+        flash("[+] Sing up successfully done.")
+        return redirect(url_for('authentication.login'))
+    return render_template("authentication/signup.html", form=form)

@@ -31,15 +31,6 @@
                             <a href="{{ url_for('index') }}" class="a-menu is-size-7 navbar-item">
                                 home
                             </a>
-                            <a class="a-menu is-size-7 navbar-item">
-                                about
-                            </a>
-                            <a class="a-menu is-size-7 navbar-item">
-                                features
-                            </a>
-                            <a class="a-menu is-size-7 navbar-item">
-                                contact
-                            </a>
                             {% if current_user.is_authenticated %}
                                 <a href="{{ url_for('authentication.logout') }}" class="a-menu is-size-7 navbar-item">
                                     logout
@@ -48,7 +39,16 @@
                                 <a href="{{ url_for('authentication.login') }}" class="a-menu is-size-7 navbar-item">
                                     login
                                 </a>
+                                <a href="{{ url_for('authentication.sign_up') }}" class="a-menu is-size-7 navbar-item">
+                                    sign up
+                                </a>
                             {% endif %}
+                            <a class="a-menu is-size-7 navbar-item">
+                                about
+                            </a>
+                            <a class="a-menu is-size-7 navbar-item">
+                                contact
+                            </a>
                         </div>
                     </div>
                     <span class="navbar-burger burger" data-target="navbarMenuHeroA">
@@ -84,9 +84,9 @@
                         dolores
                         et ea rebum.
                     </p>
-                    <button class="btn has-mustard-bg is-size-7 a-menu">
+                    <a class="btn button has-mustard-bg is-size-7 a-menu">
                         try it now
-                    </button>
+                    </a>
                 </div>
             </div>
         {% endblock %}
@@ -262,13 +262,16 @@
                     ea rebum.
                 </p>
                 <div class="field newsletter-field">
-                    <div class="control">
-                        <input class="input newsletter-input" type="text" placeholder="mail@example.com">
-                    </div>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('authentication.login') }}" class="btn button is-warning" disabled>
+                            login </a>
+                        <a href="{{ url_for('authentication.sign_up') }}" class="btn button is-warning" disabled> Sing
+                            Up</a>
+                    {% else %}
+                        <a href="{{ url_for('authentication.login') }}" class="btn button is-warning"> login </a>
+                        <a href="{{ url_for('authentication.sign_up') }}" class="btn button is-warning"> Sing Up</a>
+                    {% endif %}
                 </div>
-                <button class="btn has-mustard-bg is-size-7 a-menu">
-                    sign up now
-                </button>
             </div>
         </section>
         <!-- END Newsletter -->
