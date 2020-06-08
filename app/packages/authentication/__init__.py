@@ -27,6 +27,7 @@ bp = Blueprint(
     import_name=__name__,
     template_folder="templates",
     url_prefix="/auth",
+    static_folder="static",
 )
 
 
@@ -65,7 +66,8 @@ def logout():
 @bp.route("/<string:username>")
 def user(username, ):
     user_obj = get_user_by_username(username=username)
-    return render_template("authentication/profile.html", user=user_obj)
+    file_name = 'default_profile.jpg'
+    return render_template("authentication/profile.html", user=user_obj, file_name=file_name)
 
 
 @bp.route("/sign-up", methods=["POST", "GET"])

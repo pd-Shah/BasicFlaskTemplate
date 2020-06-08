@@ -51,12 +51,20 @@ class Role(db.Model):
             self.permissions -= permission
 
 
+class Image(db.Model):
+    __tablename__ = "images"
+    id = db.Column(db.Integer, primary_key=True, )
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
+    user = db.relationship("User", back_populates="images")
+
+
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, )
     name = db.Column(db.String(length=256, ), )
     family = db.Column(db.String(length=256, ), )
     username = db.Column(db.String(length=256, ), unique=True, )
+    photos = db.relationship("Image", back_populates="user", lazy="dynamic")
     password_hash = db.Column(db.String(length=256, ), )
     role_id = db.Column(
         db.Integer,

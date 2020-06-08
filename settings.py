@@ -12,6 +12,8 @@ class Config:
     SOURCE_SERVER_NAME = environ.get("SOURCE_SERVER_NAME")
     SECRET_KEY = environ.get("SECRET_KEY")
     ADMIN = environ.get("ADMIN")
+    IMAGE_UPLOAD_FOLDER = '/images'
+    ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
 
 class ProductionConfig(Config):

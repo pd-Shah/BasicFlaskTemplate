@@ -4,9 +4,15 @@ from urllib.parse import (
 )
 from flask import (
     request,
-    flash,
+    Blueprint,
 )
 
+bp = Blueprint("utils", __name__)
+
+
+@bp.route("/upload", methods=["GET", "POST"])
+def upload_file():
+    if request.method=="POS"
 
 def is_url_safe(endpoint, ):
     safe = False
