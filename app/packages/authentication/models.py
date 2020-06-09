@@ -1,4 +1,5 @@
 from datetime import datetime
+from os.path import join
 from werkzeug.security import (
     check_password_hash,
     generate_password_hash,
@@ -54,8 +55,9 @@ class Role(db.Model):
 class Image(db.Model):
     __tablename__ = "images"
     id = db.Column(db.Integer, primary_key=True, )
+    extension = db.Column(db.String(length=5, ))
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
-    user = db.relationship("User", back_populates="images")
+    user = db.relationship("User", back_populates="photos")
 
 
 class User(UserMixin, db.Model):
@@ -79,6 +81,7 @@ class User(UserMixin, db.Model):
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
         if self.role is None:
+            print(self.email, current_app.config["ADMIN"])
             if self.email == current_app.config["ADMIN"]:
                 self.role = Role.query.filter_by(name="admin").first()
             else:
@@ -107,6 +110,11 @@ class User(UserMixin, db.Model):
         self.last_seen = datetime.utcnow()
         db.session.add(self)
         db.session.commit()
+
+    def get_photos_url(self, ):
+        if self.photos.count():
+            photos = self.photos.all()
+            return [str(photo.id) + '.' + photo.extension for photo in photos][0]
 
 
 class AnonymousUser(AnonymousUserMixin, ):

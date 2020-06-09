@@ -4,7 +4,7 @@ from flask_login import LoginManager
 from app.packages.email import Email
 
 login = LoginManager()
-login.login_view = "app.packages.authentication.login"
+login.login_view = "authentication.login"
 db = SQLAlchemy()
 migrate = Migrate()
 email = Email()

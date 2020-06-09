@@ -10,15 +10,19 @@ from flask_login import (
     login_user,
     logout_user,
     current_user,
+    login_required,
 )
 from .forms import (
     LoginForm,
     SignUpForm,
+    UpdateProfileForm,
 )
 from .logics import (
     check_to_login,
     get_user_by_username,
     check_to_sign_up,
+    allowed_file,
+    save_file,
 )
 from app.packages.utils import is_url_safe
 
@@ -57,6 +61,7 @@ def login():
 
 
 @bp.route("/logout", )
+@login_required
 def logout():
     logout_user()
     flash("[+] logout successfully done.")
@@ -66,8 +71,33 @@ def logout():
 @bp.route("/<string:username>")
 def user(username, ):
     user_obj = get_user_by_username(username=username)
-    file_name = 'default_profile.jpg'
-    return render_template("authentication/profile.html", user=user_obj, file_name=file_name)
+    photo = 'default_profile.jpg'
+    return render_template("authentication/profile.html", user=user_obj, file_name=photo)
+
+
+@bp.route("/my-profile", methods=["GET", "POST"])
+@login_required
+def my_profile():
+    form = UpdateProfileForm()
+    photo = current_user.get_photos_url()
+    if form.validate_on_submit():
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('[-] No file part.')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('[-] No selected file.')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            flash('[+] upload successfully done.')
+            filename = save_file(file)
+            return redirect(url_for('authentication.my_profile'))
+        else:
+            flash("[-] this type is not allowed.")
+    return render_template("authentication/my_profile.html", photo=photo, form=form)
 
 
 @bp.route("/sign-up", methods=["POST", "GET"])

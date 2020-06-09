@@ -1,4 +1,9 @@
 from os import environ
+from os.path import (
+    abspath,
+    dirname,
+    join
+)
 
 
 class Config:
@@ -12,20 +17,22 @@ class Config:
     SOURCE_SERVER_NAME = environ.get("SOURCE_SERVER_NAME")
     SECRET_KEY = environ.get("SECRET_KEY")
     ADMIN = environ.get("ADMIN")
-    IMAGE_UPLOAD_FOLDER = '/images'
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+    BASE_DIR = abspath(dirname(__file__))
 
 
 class ProductionConfig(Config):
-    pass
+    UPLOAD_DIR = None
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    UPLOAD_DIR = join(Config.BASE_DIR, 'app/packages/authentication/static/images')
 
 
 class TestConfig(Config):
     TESTING = True
+    UPLOAD_DIR = None
 
 
 configs = {

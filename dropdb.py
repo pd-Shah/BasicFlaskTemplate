@@ -37,6 +37,7 @@ with app.app_context():
     db.create_all()
     db.session.commit()
     fake = Faker()
+    app.config["ADMIN"] = environ.get("ADMIN")
 
     admin_role = get_admin_role()
     moderator_role = get_moderator_role()

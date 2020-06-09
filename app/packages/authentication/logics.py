@@ -1,11 +1,18 @@
+from os.path import join
 from functools import wraps
 from flask_login import current_user
-from flask import abort
+from flask import (
+    abort,
+    current_app,
+)
 from app.init import (
     login,
     db,
 )
-from .models import User
+from .models import (
+    User,
+    Image,
+)
 
 
 @login.user_loader
@@ -49,3 +56,27 @@ def check_to_sign_up(user_obj, ):
     user.password = password
     db.session.add(user)
     db.session.commit()
+
+
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in current_app.config.get("ALLOWED_EXTENSIONS")
+
+
+def get_last_image_id():
+    last_record_id = 1
+    i = Image.query.order_by(Image.id.desc()).first()
+    if i is not None:
+        last_record_id = i.id + 1
+    return str(last_record_id)
+
+
+def save_file(file):
+    extension = file.filename.rsplit(".", 1)[1].lower()
+    filename = get_last_image_id() + '.' + extension
+    file.save(join(current_app.config['UPLOAD_DIR'], filename))
+    photo = Image()
+    photo.extension = extension
+    db.session.add(photo)
+    current_user.photos.append(photo)
+    db.session.commit()
+    return filename

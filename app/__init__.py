@@ -23,17 +23,11 @@ def create_app():
         instance_relative_config=True,
     )
     app.config.from_object(config)
-
-    try:
-        makedirs(
-            name=app.instance_path,
-            exist_ok=True,
-        )
-    except Exception as e:
-        print(e)
-
+    makedirs(
+        name=app.instance_path,
+        exist_ok=True,
+    )
     app.config.from_pyfile(filename="settings.py", silent=False)
-    app.config["UPLOAD_DIR"] = join(app.config.get("BASE_DIR"), app.config.get("IMAGE_UPLOAD_FOLDER"))
     db.init_app(app=app)
     migrate.init_app(app, db, )
     email.init_app(app, )
