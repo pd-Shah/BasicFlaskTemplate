@@ -38,8 +38,7 @@ def create_app():
 
     @app.route("/", methods=["GET", ])
     def index():
-        photo = current_user.get_photos_url()
-        return render_template("base.html", photo=photo)
+        return render_template("base.html")
 
     @app.shell_context_processor
     def load_data():

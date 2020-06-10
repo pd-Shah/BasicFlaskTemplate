@@ -18,6 +18,7 @@ class Config:
     SECRET_KEY = environ.get("SECRET_KEY")
     ADMIN = environ.get("ADMIN")
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+    SAVE_EXTENSION = ".jpg"
     BASE_DIR = abspath(dirname(__file__))
 
 

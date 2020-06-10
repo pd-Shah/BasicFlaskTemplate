@@ -55,9 +55,8 @@ class Role(db.Model):
 class Image(db.Model):
     __tablename__ = "images"
     id = db.Column(db.Integer, primary_key=True, )
-    extension = db.Column(db.String(length=5, ))
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
-    user = db.relationship("User", back_populates="photos")
+    user = db.relationship("User", back_populates="photo")
 
 
 class User(UserMixin, db.Model):
@@ -66,7 +65,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(length=256, ), )
     family = db.Column(db.String(length=256, ), )
     username = db.Column(db.String(length=256, ), unique=True, )
-    photos = db.relationship("Image", back_populates="user", lazy="dynamic")
+    photo = db.relationship("Image", back_populates="user", uselist=False)
     password_hash = db.Column(db.String(length=256, ), )
     role_id = db.Column(
         db.Integer,
@@ -110,10 +109,10 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def get_photos_url(self, ):
-        if self.photos.count():
-            photos = self.photos.all()
-            return [str(photo.id) + '.' + photo.extension for photo in photos][0]
+    def get_photo_url(self, ):
+        if self.photo:
+            photo = self.photo
+            return str(photo.id) + current_app.config.get("SAVE_EXTENSION")
 
 
 class AnonymousUser(AnonymousUserMixin, ):

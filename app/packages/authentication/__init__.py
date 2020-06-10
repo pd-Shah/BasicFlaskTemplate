@@ -1,3 +1,4 @@
+from time import time
 from flask import (
     Blueprint,
     render_template,
@@ -80,13 +81,13 @@ def user(username, ):
 @fresh_login_required
 def my_profile():
     form = UpdateProfileForm()
-    photo = current_user.get_photos_url()
+    photo = current_user.get_photo_url()
     if form.validate_on_submit():
         # check if the post request has the file part
-        if 'photos' not in request.files:
+        if 'photo' not in request.files:
             flash('[-] No file part.')
             return redirect(request.url)
-        photo = request.files['photos']
+        photo = request.files['photo']
         # if user does not select file, browser also
         # submit an empty part without filename
         if photo.filename == '':
@@ -98,7 +99,7 @@ def my_profile():
             return redirect(url_for('authentication.my_profile'))
         else:
             flash("[-] this type is not allowed.")
-    return render_template("authentication/my_profile.html", photo=photo, form=form)
+    return render_template("authentication/my_profile.html", photo=photo, form=form, time=str(time()))
 
 
 @bp.route("/sign-up", methods=["POST", "GET"])

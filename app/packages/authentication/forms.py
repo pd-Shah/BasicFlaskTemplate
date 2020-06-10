@@ -60,7 +60,7 @@ class UpdateProfileForm(FlaskForm):
         self.name.data = current_user.name
         self.family.data = current_user.family
         self.username.data = current_user.username
-        self.photos.data = current_user.photos
+        self.photo.data = current_user.photo
         self.role.data = current_user.role
         self.location.data = current_user.location
         self.about_me.data = current_user.about_me
@@ -77,7 +77,7 @@ class UpdateProfileForm(FlaskForm):
     name = StringField(label="name", validators=[Length(0, 64), ])
     family = StringField(label="family", validators=[Length(0, 64), ])
     username = StringField(label="username", validators=[Length(0, 64), ])
-    photos = FileField(label="profile picture")
+    photo = FileField(label="profile picture")
     role = StringField(label="role")
     location = StringField(label="location")
     about_me = StringField(label="describe your self", widget=TextArea(), validators=[Length(0, 256), ])

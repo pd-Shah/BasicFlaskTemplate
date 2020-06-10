@@ -63,32 +63,19 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in current_app.config.get("ALLOWED_EXTENSIONS")
 
 
-def get_last_image_id():
-    last_record_id = 1
-    i = Image.query.order_by(Image.id.desc()).first()
-    if i is not None:
-        last_record_id = i.id + 1
-    return str(last_record_id)
+def remove_old_photo():
+    image = current_user.photo
+    if image:
+        remove(join(current_app.config['UPLOAD_DIR'], str(image.id) + current_app.config.get("SAVE_EXTENSION")))
 
-
-def get_last_user_image():
-    if not current_user.photos.count():
-        last_record_id = get_last_image_id()
-    else:
-        i = current_user.photos.all()[0]
-        last_record_id = i.id
-    return str(last_record_id)
-
-# def remove_file(file, ):
-#     current_user
 
 def save_file(file):
-    extension = file.filename.rsplit(".", 1)[1].lower()
-    filename = get_last_user_image() + '.' + extension
-    file.save(join(current_app.config['UPLOAD_DIR'], filename))
+    remove_old_photo()
     photo = Image()
-    photo.extension = extension
     db.session.add(photo)
-    current_user.photos.append(photo)
+    current_user.photo = photo
     db.session.commit()
+    filename = str(current_user.photo.id) + current_app.config.get("SAVE_EXTENSION")
+    file.save(join(current_app.config['UPLOAD_DIR'], filename))
+
     return filename

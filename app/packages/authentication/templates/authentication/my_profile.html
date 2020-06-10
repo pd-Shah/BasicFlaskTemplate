@@ -181,9 +181,9 @@
                     {% endfor %}
                 </div>
                 <div class="field">
-                    <label class="label">{{ form.photos.label(class="has-text-green a-menu") }}</label>
+                    <label class="label">{{ form.photo.label(class="has-text-green a-menu") }}</label>
                     <div class="control has-icons-left has-icons-right">
-                        {{ form.photos(class="input is-success",  placeholder="yourphoto") }}
+                        {{ form.photo(class="input is-success",  placeholder="yourphoto") }}
                         <span class="icon is-small is-left">
                             <i class="fas fa-image"></i>
                         </span>
@@ -191,7 +191,7 @@
                             <i class="fas fa-exclamation-triangle"></i>
                         </span>
                     </div>
-                    {% for error in form.photos.errors %}
+                    {% for error in form.photo.errors %}
                         <div class="message is-danger">
                             <div class="message-body">
                                 <p class="help is-danger">{{ error }}</p>
@@ -200,7 +200,7 @@
                     {% endfor %}
                 </div>
                 {% if photo %}
-                    <img width="250" height="250" src="{{ url_for('authentication.static', filename='images/' + photo) }}">
+                    <img width="250" height="250" src="{{ url_for('authentication.static', filename='images/' + photo)+"?"+time }}">
                 {% endif %}
                 <div>
                     {{ form.submit(class="btn has-mustard-bg is-size-6 a-menu") }}
