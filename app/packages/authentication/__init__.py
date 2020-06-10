@@ -11,6 +11,7 @@ from flask_login import (
     logout_user,
     current_user,
     login_required,
+    fresh_login_required,
 )
 from .forms import (
     LoginForm,
@@ -76,24 +77,24 @@ def user(username, ):
 
 
 @bp.route("/my-profile", methods=["GET", "POST"])
-@login_required
+@fresh_login_required
 def my_profile():
     form = UpdateProfileForm()
     photo = current_user.get_photos_url()
     if form.validate_on_submit():
         # check if the post request has the file part
-        if 'file' not in request.files:
+        if 'photos' not in request.files:
             flash('[-] No file part.')
             return redirect(request.url)
-        file = request.files['file']
+        photo = request.files['photos']
         # if user does not select file, browser also
         # submit an empty part without filename
-        if file.filename == '':
+        if photo.filename == '':
             flash('[-] No selected file.')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if photo and allowed_file(photo.filename):
             flash('[+] upload successfully done.')
-            filename = save_file(file)
+            filename = save_file(photo)
             return redirect(url_for('authentication.my_profile'))
         else:
             flash("[-] this type is not allowed.")

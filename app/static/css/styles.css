@@ -10,6 +10,9 @@
     background-color: #e39905;
 }
 
+.has-yellow-color{
+    color: #ffec62 !important;
+}
 .has-white-mustard-gradient {
     background: rgb(255, 255, 255);
     background: -moz-linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(253, 187, 52, 1) 50%, rgba(253, 187, 52, 1) 100%);

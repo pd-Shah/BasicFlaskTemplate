@@ -70,9 +70,18 @@ def get_last_image_id():
     return str(last_record_id)
 
 
+def get_last_user_image():
+    if not current_user.photos.count():
+        last_record_id = get_last_image_id()
+    else:
+        i = current_user.photos.all()[0]
+        last_record_id = i.id
+    return str(last_record_id)
+
+
 def save_file(file):
     extension = file.filename.rsplit(".", 1)[1].lower()
-    filename = get_last_image_id() + '.' + extension
+    filename = get_last_user_image() + '.' + extension
     file.save(join(current_app.config['UPLOAD_DIR'], filename))
     photo = Image()
     photo.extension = extension

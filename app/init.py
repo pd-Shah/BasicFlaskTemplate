@@ -5,6 +5,7 @@ from app.packages.email import Email
 
 login = LoginManager()
 login.login_view = "authentication.login"
+login.refresh_view = "authentication.login"
 db = SQLAlchemy()
 migrate = Migrate()
 email = Email()

@@ -81,7 +81,6 @@ class User(UserMixin, db.Model):
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
         if self.role is None:
-            print(self.email, current_app.config["ADMIN"])
             if self.email == current_app.config["ADMIN"]:
                 self.role = Role.query.filter_by(name="admin").first()
             else:

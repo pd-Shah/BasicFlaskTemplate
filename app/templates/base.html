@@ -32,6 +32,10 @@
                                 home
                             </a>
                             {% if current_user.is_authenticated %}
+                                <a href="{{ url_for('authentication.my_profile') }}"
+                                   class="a-menu is-size-7 navbar-item">
+                                    profile
+                                </a>
                                 <a href="{{ url_for('authentication.logout') }}" class="a-menu is-size-7 navbar-item">
                                     logout
                                 </a>

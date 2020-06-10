@@ -5,115 +5,207 @@
 {% block content %} {% endblock %}
 {% block footer %} {% endblock %}
 {% block hero_body %}
-    <div class="hero-body"
-         style="background-image: url(
-                 {% if photo %}{{ url_for('authentication.static', filename="images/" + photo) }}{% endif %}
-                 );">
+    <div class="hero-body">
         <div class="container">
-            <h1 class="has-text-green is-size-1 is-size-3-mobile">
-                Check or Update
-            </h1>
-            <div class="column is-three-fifths">
-                <form method="post" enctype="multipart/form-data">
-                    {{ form.hidden_tag() }}
-                    <div class="field">
-                        {{ form.email.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.email(class="input") }}
-                        {% for error in form.email.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {{ form.password.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.password(class="input") }}
-                        {% for error in form.password.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {{ form.name.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.name(class="input") }}
-                        {% for error in form.name.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {{ form.family.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.family(class="input") }}
-                        {% for error in form.family.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {{ form.username.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.username(class="input") }}
-                        {% for error in form.username.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {{ form.photos.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.photos(class="input") }}
-                        {% for error in form.photos.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {{ form.role.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.role(class="input") }}
-                        {% for error in form.role.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {{ form.location.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.location(class="input") }}
-                        {% for error in form.location.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {{ form.about_me.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.about_me(class="input") }}
-                        {% for error in form.about_me.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {{ form.last_seen.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
-                        {{ form.last_seen(class="input") }}
-                        {% for error in form.last_seen.errors %}
-                            <div class="message is-danger">
-                                <div class="message-body">
-                                    {{ error }}
-                                </div>
-                            </div>
-                        {% endfor %}
-
-                        <div>
-                            {{ form.submit(class="btn has-mustard-bg is-size-5 a-menu") }}
-                        </div>
+            <form method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="field">
+                    <label class="label">{{ form.name.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.name(class="input is-success",  placeholder="yourname") }}
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-child"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
                     </div>
-                </form>
-            </div>
+                    {% for error in form.name.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.family.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.family(class="input is-success",  placeholder="yourfanily") }}
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-address-card"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
+                    {% for error in form.family.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.username.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.username(class="input is-success",  placeholder="yourusername") }}
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
+                    {% for error in form.username.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.email.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.email(class="input is-success",  placeholder="youremail") }}
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
+                    {% for error in form.email.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.password.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.password(class="input is-success",  placeholder="yourpassword") }}
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-key"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
+                    {% for error in form.password.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.role.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.role(class="input is-success",  placeholder="yourrole") }}
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-universal-access"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
+                    {% for error in form.role.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.location.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.location(class="input is-success",  placeholder="yourlocation") }}
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-map-marker"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
+                    {% for error in form.location.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.about_me.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.about_me(class="input is-success",  placeholder="about_me") }}
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-info"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
+                    {% for error in form.about_me.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.last_seen.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.last_seen(class="input is-success",  placeholder="lastseen") }}
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
+                    {% for error in form.last_seen.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.photos.label(class="has-text-green a-menu") }}</label>
+                    <div class="control has-icons-left has-icons-right">
+                        {{ form.photos(class="input is-success",  placeholder="yourphoto") }}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-image"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
+                    {% for error in form.photos.errors %}
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                <p class="help is-danger">{{ error }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if photo %}
+                    <img src="{{ url_for('authentication.static', filename='images/' + photo) }}">
+                {% endif %}
+                <div>
+                    {{ form.submit(class="btn has-mustard-bg is-size-6 a-menu") }}
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

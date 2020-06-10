@@ -85,7 +85,3 @@ class UpdateProfileForm(FlaskForm):
     submit = SubmitField(
         label="Update",
     )
-
-    def validate_email(self, field):
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError("[-] this email is already registered.")

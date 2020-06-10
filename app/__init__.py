@@ -40,4 +40,13 @@ def create_app():
     def index():
         return render_template("base.html")
 
+    @app.shell_context_processor
+    def load_data():
+        return dict(
+            app=app,
+            User=authentication.models.User,
+            Image=authentication.models.Image,
+            Role=authentication.models.Role,
+        )
+
     return app
