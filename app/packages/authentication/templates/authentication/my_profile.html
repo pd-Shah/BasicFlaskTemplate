@@ -200,7 +200,7 @@
                     {% endfor %}
                 </div>
                 {% if photo %}
-                    <img src="{{ url_for('authentication.static', filename='images/' + photo) }}">
+                    <img width="250" height="250" src="{{ url_for('authentication.static', filename='images/' + photo) }}">
                 {% endif %}
                 <div>
                     {{ form.submit(class="btn has-mustard-bg is-size-6 a-menu") }}

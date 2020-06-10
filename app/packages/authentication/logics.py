@@ -1,4 +1,5 @@
 from os.path import join
+from os import remove
 from functools import wraps
 from flask_login import current_user
 from flask import (
@@ -78,6 +79,8 @@ def get_last_user_image():
         last_record_id = i.id
     return str(last_record_id)
 
+# def remove_file(file, ):
+#     current_user
 
 def save_file(file):
     extension = file.filename.rsplit(".", 1)[1].lower()

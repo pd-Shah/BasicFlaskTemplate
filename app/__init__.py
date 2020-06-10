@@ -1,5 +1,5 @@
 from os import makedirs
-from os.path import join
+from flask_login import current_user
 from flask import (
     Flask,
     render_template,
@@ -38,15 +38,18 @@ def create_app():
 
     @app.route("/", methods=["GET", ])
     def index():
-        return render_template("base.html")
+        photo = current_user.get_photos_url()
+        return render_template("base.html", photo=photo)
 
     @app.shell_context_processor
     def load_data():
+        u = authentication.models.User.query.get(1)
         return dict(
             app=app,
             User=authentication.models.User,
             Image=authentication.models.Image,
             Role=authentication.models.Role,
+            u=u,
         )
 
     return app
