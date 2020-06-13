@@ -5,6 +5,7 @@ from wtforms.fields import (
     SubmitField,
     FileField,
     DateTimeField,
+    SelectField,
 )
 from wtforms.widgets import TextArea
 from wtforms.validators import (
@@ -18,7 +19,10 @@ from flask_wtf import (
     RecaptchaField,
 )
 from flask_login import current_user
-from .models import User
+from .models import (
+    User,
+    Role,
+)
 
 
 class LoginForm(FlaskForm):
@@ -74,7 +78,7 @@ class UpdateProfileForm(FlaskForm):
     family = StringField(label="family", validators=[Length(0, 64), ])
     username = StringField(label="username", validators=[Length(0, 64), ])
     photo = FileField(label="profile picture")
-    role = StringField(label="role")
+    role = SelectField(label="role", validate_choice=False)
     location = StringField(label="location")
     about_me = StringField(label="describe your self", widget=TextArea(), validators=[Length(0, 256), ])
     last_seen = DateTimeField(label="last seen")
@@ -88,7 +92,9 @@ class UpdateProfileForm(FlaskForm):
         self.family.data = current_user.family
         self.username.data = current_user.username
         self.photo.data = current_user.photo
-        self.role.data = current_user.role
         self.location.data = current_user.location
         self.about_me.data = current_user.about_me
         self.last_seen.data = current_user.last_seen
+        self.role.choices = [(role, role) for i, role in enumerate(Role.query.all())]
+        self.role.default = current_user.role
+        self.process()
