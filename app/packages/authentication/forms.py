@@ -87,6 +87,9 @@ class UpdateProfileForm(FlaskForm):
     )
 
     def load_data(self, ):
+        self.role.choices = [(role, role) for i, role in enumerate(Role.query.all())]
+        self.role.default = current_user.role
+        self.process()
         self.email.data = current_user.email
         self.name.data = current_user.name
         self.family.data = current_user.family
@@ -95,6 +98,3 @@ class UpdateProfileForm(FlaskForm):
         self.location.data = current_user.location
         self.about_me.data = current_user.about_me
         self.last_seen.data = current_user.last_seen
-        self.role.choices = [(role, role) for i, role in enumerate(Role.query.all())]
-        self.role.default = current_user.role
-        self.process()

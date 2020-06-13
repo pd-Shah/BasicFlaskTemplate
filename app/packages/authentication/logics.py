@@ -98,9 +98,6 @@ def update_profile(form, photo, ):
     user.about_me = form.about_me.data
     if form.password.data != "":
         user.password = form.password.data
-    if form.role.data != user.role:
-        flash(user.role.name)
-        flash("[-] access violation!")
     db.session.commit()
     flash("[+] Profile updated successfully.")
     return user
