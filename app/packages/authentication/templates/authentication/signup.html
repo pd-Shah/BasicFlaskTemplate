@@ -13,7 +13,7 @@
                             {{ form.email.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
                             {{ form.email(class="input") }}
                             {% for error in form.email.errors %}
-                                <div class="message is-danger">
+                                <div class="message is-warning">
                                     <div class="message-body">
                                         {{ error }}
                                     </div>
@@ -22,14 +22,27 @@
                             {{ form.password.label(class="has-text-green a-menu is-size-4 is-size-5-mobile") }}
                             {{ form.password(class="input") }}
                             {% for error in form.password.errors %}
-                                <div class="message is-danger">
+                                <div class="message is-warning">
                                     <div class="message-body">
                                         {{ error }}
                                     </div>
                                 </div>
                             {% endfor %}
-                            <div>
-                                {{ form.submit(class="btn has-mustard-bg is-size-7 a-menu") }}
+                            <br><br>
+                            <div class="columns">
+                                <div class="column">
+                                    {% for error in form.recaptcha.errors %}
+                                        <div class="message is-warning">
+                                            <div class="message-body">
+                                                {{ error }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    {{ form.recaptcha() }}
+                                </div>
+                                <div class="column">
+                                    {{ form.submit(class="btn has-mustard-bg is-size-7 a-menu") }}
+                                </div>
                             </div>
                         </div>
                     </form>

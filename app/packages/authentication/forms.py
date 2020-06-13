@@ -13,7 +13,10 @@ from wtforms.validators import (
     Length,
     ValidationError,
 )
-from flask_wtf import FlaskForm
+from flask_wtf import (
+    FlaskForm,
+    RecaptchaField,
+)
 from flask_login import current_user
 from .models import User
 
@@ -30,6 +33,7 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField(
         label="",
     )
+    recaptcha = RecaptchaField()
     submit = SubmitField(
         label="login",
     )
@@ -44,6 +48,7 @@ class SignUpForm(FlaskForm):
         label="password",
         validators=[DataRequired(), Length(1, 64), ],
     )
+    recaptcha = RecaptchaField()
     submit = SubmitField(
         label="Sign Up",
     )

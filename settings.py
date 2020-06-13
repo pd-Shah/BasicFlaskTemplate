@@ -20,6 +20,10 @@ class Config:
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
     SAVE_EXTENSION = ".jpg"
     BASE_DIR = abspath(dirname(__file__))
+    RECAPTCHA_PUBLIC_KEY = environ.get("RECAPTCHA_PUBLIC_KEY")
+    RECAPTCHA_PRIVATE_KEY = environ.get("RECAPTCHA_PRIVATE_KEY")
+    MAX_CONTENT_LENGTH = int(environ.get("MAX_CONTENT_LENGTH_SIZE")) * int(
+        environ.get("MAX_CONTENT_LENGTH_HEIGHT")) * int(environ.get("MAX_CONTENT_LENGTH_WEIGHT"))
 
 
 class ProductionConfig(Config):

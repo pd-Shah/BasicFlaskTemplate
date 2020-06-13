@@ -46,7 +46,7 @@ def login():
             nxt = request.args.get('next')
             login_user(
                 user=user,
-                remember=form.remember_me.data,
+                remember=False,
             )
             flash("[+] welcome %s" % current_user.username)
             if is_url_safe(nxt):

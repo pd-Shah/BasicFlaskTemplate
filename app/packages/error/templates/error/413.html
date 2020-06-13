@@ -3,6 +3,6 @@
 {% block error_body %}
     <p>
         {{ msg }}
-        <a href="/"><i class="fa fa-window-close" aria-hidden="true"></i></a>
+        <a href="{{ request.url }}"><i class="fa fa-window-close" aria-hidden="true"></i></a>
     </p>
 {% endblock %}
