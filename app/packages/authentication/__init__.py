@@ -25,6 +25,7 @@ from .logics import (
     check_to_sign_up,
     allowed_file,
     save_file,
+    update_profile,
 )
 from app.packages.utils import is_url_safe
 
@@ -83,22 +84,10 @@ def my_profile():
     form = UpdateProfileForm()
     photo = current_user.get_photo_url()
     if form.validate_on_submit():
-        # check if the post request has the file part
-        if 'photo' not in request.files:
-            flash('[-] No file part.')
-            return redirect(request.url)
         photo = request.files['photo']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if photo.filename == '':
-            flash('[-] No selected file.')
-            return redirect(request.url)
-        if photo and allowed_file(photo.filename):
-            flash('[+] upload successfully done.')
-            filename = save_file(photo)
-            return redirect(url_for('authentication.my_profile'))
-        else:
-            flash("[-] this type is not allowed.")
+        update_profile(form=form, photo=photo)
+        return redirect(url_for('authentication.my_profile'))
+    form.load_data()
     return render_template("authentication/my_profile.html", photo=photo, form=form, time=str(time()))
 
 

@@ -49,6 +49,7 @@ def create_app():
             Image=authentication.models.Image,
             Role=authentication.models.Role,
             u=u,
+            db=db,
         )
 
     return app

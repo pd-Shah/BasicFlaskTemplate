@@ -5,6 +5,7 @@ from flask_login import current_user
 from flask import (
     abort,
     current_app,
+    flash,
 )
 from app.init import (
     login,
@@ -14,6 +15,7 @@ from .models import (
     User,
     Image,
 )
+from .forms import UpdateProfileForm
 
 
 @login.user_loader
@@ -77,5 +79,28 @@ def save_file(file):
     db.session.commit()
     filename = str(current_user.photo.id) + current_app.config.get("SAVE_EXTENSION")
     file.save(join(current_app.config['UPLOAD_DIR'], filename))
-
     return filename
+
+
+def update_profile(form, photo, ):
+    # if user does not select file, browser also
+    # submit an empty part without filename
+    if photo and allowed_file(photo.filename):
+        flash('[+] Upload successfully done.')
+        save_file(photo)
+
+    user = User.query.get(current_user.id)
+    user.email = form.email.data
+    user.name = form.name.data
+    user.family = form.family.data
+    user.username = form.username.data
+    user.location = form.location.data
+    user.about_me = form.about_me.data
+    if form.password.data != "":
+        user.password = form.password.data
+
+    db.session.commit()
+    flash("[+] Profile updated successfully.")
+    return user
+
+

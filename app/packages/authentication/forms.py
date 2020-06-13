@@ -61,15 +61,6 @@ class SignUpForm(FlaskForm):
 class UpdateProfileForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(UpdateProfileForm, self).__init__(*args, **kwargs)
-        self.email.data = current_user.email
-        self.name.data = current_user.name
-        self.family.data = current_user.family
-        self.username.data = current_user.username
-        self.photo.data = current_user.photo
-        self.role.data = current_user.role
-        self.location.data = current_user.location
-        self.about_me.data = current_user.about_me
-        self.last_seen.data = current_user.last_seen
 
     email = StringField(
         label="email",
@@ -90,3 +81,14 @@ class UpdateProfileForm(FlaskForm):
     submit = SubmitField(
         label="Update",
     )
+
+    def load_data(self, ):
+        self.email.data = current_user.email
+        self.name.data = current_user.name
+        self.family.data = current_user.family
+        self.username.data = current_user.username
+        self.photo.data = current_user.photo
+        self.role.data = current_user.role
+        self.location.data = current_user.location
+        self.about_me.data = current_user.about_me
+        self.last_seen.data = current_user.last_seen
