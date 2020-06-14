@@ -42,7 +42,9 @@ def create_app():
 
     @app.shell_context_processor
     def load_data():
-        u = authentication.models.User.query.get(1)
+        a = authentication.models.User.query.get(1)
+        m = authentication.models.User.query.get(2)
+        u = authentication.models.User.query.get(3)
         return dict(
             app=app,
             User=authentication.models.User,
@@ -50,6 +52,8 @@ def create_app():
             Role=authentication.models.Role,
             u=u,
             db=db,
+            m=m,
+            a=a,
         )
 
     return app

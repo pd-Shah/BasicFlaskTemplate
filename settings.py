@@ -7,6 +7,8 @@ from os.path import (
 
 
 class Config:
+    from dotenv import load_dotenv
+    load_dotenv()
     DEBUG = False
     TESTING = False
     SMTP_SERVER = environ.get("SMTP_SERVER")

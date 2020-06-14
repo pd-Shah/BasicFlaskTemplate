@@ -76,12 +76,14 @@ class User(UserMixin, db.Model):
     location = db.Column(db.String(length=256))
     about_me = db.Column(db.Text())
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    is_active = db.Column(db.Boolean(), default=False)
 
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
         if self.role is None:
             if self.email == current_app.config["ADMIN"]:
                 self.role = Role.query.filter_by(name="admin").first()
+                self.is_active = True
             else:
                 self.role = Role.query.filter_by(name="user").first()
 

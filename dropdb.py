@@ -1,5 +1,4 @@
 from faker import Faker
-from dotenv import load_dotenv
 from os import environ
 from app.init import db
 from app import create_app
@@ -31,7 +30,6 @@ def get_user_role():
 
 
 with app.app_context():
-    load_dotenv()
     db.reflect()
     db.drop_all()
     db.create_all()

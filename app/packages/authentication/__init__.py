@@ -44,16 +44,21 @@ def login():
     if form.validate_on_submit():
         user = check_to_login(form)
         if user:
-            nxt = request.args.get('next')
-            login_user(
-                user=user,
-                remember=False,
-            )
-            flash("[+] welcome %s" % current_user.username)
-            if is_url_safe(nxt):
-                return redirect(nxt)
+            if user.is_active:
+                nxt = request.args.get('next')
+                login_user(
+                    user=user,
+                    remember=False,
+                )
+                flash("[+] welcome %s" % current_user.username)
+                if is_url_safe(nxt):
+                    return redirect(nxt)
+                else:
+                    return redirect("/")
             else:
-                return redirect("/")
+                flash("[-] Your account is not activated.")
+                flash("[-] Check your email for activation.")
+                return redirect(request.url)
         else:
             flash("[-] Username & Password mixing is invalid.")
             return redirect(url_for('authentication.login'), )
