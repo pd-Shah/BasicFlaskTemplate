@@ -11,7 +11,6 @@ from app.init import (
     login,
     email,
 )
-from app.packages.email.templates import WelcomeToYourSite
 from app.packages.email import Email
 from app.packages import authentication
 from app.packages import error

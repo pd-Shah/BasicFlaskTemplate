@@ -1,5 +1,5 @@
 from datetime import datetime
-from os.path import join
+from itsdangerous import TimedJSONWebSignatureSerializer
 from werkzeug.security import (
     check_password_hash,
     generate_password_hash,
@@ -115,6 +115,32 @@ class User(UserMixin, db.Model):
         if self.photo:
             photo = self.photo
             return str(photo.id) + current_app.config.get("SAVE_EXTENSION")
+
+    def generate_signature(self, exp=3000):
+        serializer = TimedJSONWebSignatureSerializer(
+            secret_key=current_app.config['SECRET_KEY'],
+            salt='pd',
+            expires_in=exp, )
+        return serializer.dumps(
+            {'code': self.id, }
+        )
+
+    def validate_signature(self, token):
+        result = False
+        serializer = TimedJSONWebSignatureSerializer(
+            secret_key=current_app.config["SECRET_KEY"],
+            salt='pd',
+        )
+        try:
+            data = serializer.loads(token)
+            if data.get['code'] == self.id:
+                result = True
+        except Exception as e:
+            pass
+        print(data.get['code'])
+        print(data.get['code'])
+        print(self.id)
+        return result
 
 
 class AnonymousUser(AnonymousUserMixin, ):

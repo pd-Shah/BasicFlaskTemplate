@@ -6,10 +6,12 @@ from flask import (
     abort,
     current_app,
     flash,
+    url_for,
 )
 from app.init import (
     login,
     db,
+    email,
 )
 from .models import (
     User,
@@ -59,6 +61,8 @@ def check_to_sign_up(user_obj, ):
     user.password = password
     db.session.add(user)
     db.session.commit()
+    send_verification_email(user_email=email)
+    flash("[+] An email verification has been sent to your email address.")
 
 
 def allowed_file(filename):
@@ -101,3 +105,21 @@ def update_profile(form, photo, ):
     db.session.commit()
     flash("[+] Profile updated successfully.")
     return user
+
+
+def check_activate_user_by_signature(token, ):
+    if current_user.validate_signature(token):
+        current_user.is_active = True
+        db.session.commit()
+
+
+def send_verification_email(user_email, ):
+    user = User.query.filter_by(email=user_email).first()
+    token = user.generate_signature()
+    email.send(
+        html_template_name='email_verification.html',
+        destination=user_email,
+        subject="Email Verification",
+        email=user_email,
+        link=url_for("authentication.verify_email", token=token, _external=True),
+    )

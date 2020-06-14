@@ -16,7 +16,7 @@ class Config:
     SMTP_PASSWROD = environ.get("SMTP_PASSWROD")
     SMTP_USE_TLS = environ.get("SMTP_USE_TLS")
     SMTP_PORT = environ.get("SMTP_PORT")
-    SOURCE_SERVER_NAME = environ.get("SOURCE_SERVER_NAME")
+    SERVER_NAME = environ.get("SERVER_NAME")
     SECRET_KEY = environ.get("SECRET_KEY")
     ADMIN = environ.get("ADMIN")
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}

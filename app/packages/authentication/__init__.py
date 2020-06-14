@@ -26,6 +26,8 @@ from .logics import (
     allowed_file,
     save_file,
     update_profile,
+    send_verification_email,
+    check_activate_user_by_signature,
 )
 from app.packages.utils import is_url_safe
 
@@ -57,7 +59,9 @@ def login():
                     return redirect("/")
             else:
                 flash("[-] Your account is not activated.")
+                flash("[+] An email verification has been sent to your email address.")
                 flash("[-] Check your email for activation.")
+                send_verification_email(user_email=form.email.data)
                 return redirect(request.url)
         else:
             flash("[-] Username & Password mixing is invalid.")
@@ -104,3 +108,22 @@ def sign_up():
         flash("[+] Sing up successfully done.")
         return redirect(url_for('authentication.login'))
     return render_template("authentication/signup.html", form=form)
+
+
+@bp.route('/verify/<token>', methods=["GET", "POST", ])
+def verify_email(token, ):
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = check_to_login(form)
+        if user:
+            login_user(user=user, remember=False, force=True)
+            check_activate_user_by_signature(token=token)
+            return redirect("/")
+        else:
+            flash("[-] Username & Password mixing is invalid.")
+            return redirect(request.url)
+    return render_template(
+        "authentication/login.html",
+        form=form,
+    )
+    return redirect(url_for('authentication.login'))
