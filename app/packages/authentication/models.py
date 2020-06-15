@@ -133,13 +133,10 @@ class User(UserMixin, db.Model):
         )
         try:
             data = serializer.loads(token)
-            if data.get['code'] == self.id:
+            if data.get('code') == self.id:
                 result = True
         except Exception as e:
             pass
-        print(data.get['code'])
-        print(data.get['code'])
-        print(self.id)
         return result
 
 
