@@ -14,7 +14,7 @@ from app.init import (
 from app.packages.email import Email
 from app.packages import authentication
 from app.packages import error
-
+from app.packages import admin
 
 def create_app():
     app = Flask(
@@ -34,6 +34,7 @@ def create_app():
     login.anonymous_user = authentication.models.AnonymousUser
     app.register_blueprint(authentication.bp)
     app.register_blueprint(error.bp)
+    app.register_blueprint(admin.bp)
 
     @app.route("/", methods=["GET", ])
     def index():
