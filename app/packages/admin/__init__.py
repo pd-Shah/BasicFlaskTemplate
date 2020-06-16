@@ -31,10 +31,18 @@ def index():
 @login_required
 @permission_required(Permission.ADMIN)
 def user_admin():
-    user_attributes = User.__table__.columns._data.keys()
     users = User.query.all()
     return render_template(
         'admin/user.html',
-        user_attributes=user_attributes,
         users=users,
+    )
+
+@bp.route('/role-admin')
+@login_required
+@permission_required(Permission.ADMIN)
+def role_admin():
+    roles = Role.query.all()
+    return render_template(
+        'admin/role.html',
+        roles=roles,
     )
